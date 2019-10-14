@@ -1,0 +1,66 @@
+<?php 
+session_start();
+$pdo = new PDO('mysql:host=localhost;dbname=webprogrammierung', 'luis', 'dPfPuL69');
+if(isset($_GET['login'])) {
+    $error = false;
+    $email = $_POST['email'];
+    $passwort = $_POST['passwort'];
+  
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessage = 'Bitte eine gültige E-Mail-Adresse angeben';
+        $error = true;
+    }     
+    if(strlen($passwort) == 0) {
+        if(isset($errorMessage)) {
+            $errorMessage = 'Sie haben weder eine gültige Email, noch ein Passwort angegeben';
+        }else{
+            $errorMessage = 'Bitte ein Passwort eingeben';
+        }
+        $error = true;
+    }
+    
+    //Überprüfe, ob Daten in Datenbank existieren
+    if(!$error) { 
+        $statement = $pdo->prepare("SELECT * FROM user WHERE EMail = :email and Passwort = :passwort");
+        $result = $statement->execute(array('email' => $email, 'passwort' => md5($passwort)));
+        $user = $statement->fetch();
+        
+        if($user == false) {
+            $errorMessage = 'Passwort oder EMail sind falsch';
+        }else{
+            $_SESSION['username'] = $user['Username'];
+            header("Location: Projekt.php"); 
+        }  
+    } 
+}
+?>
+<!DOCTYPE html> 
+<html> 
+<head>
+<meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="C:\Users\Luis\Documents\UNI\Webprogrammierung\formatierungProjekt.css">
+    <title>Bikeshop Login</title>
+    <link rel="icon" href="rad.jpg" type="image/x-icon">  
+
+</head> 
+<body>
+ 
+<?php
+if(isset($errorMessage)) {
+    echo "<script type='text/javascript'>alert('$errorMessage');</script>";
+}
+?>
+ 
+<form action="?login=1" method="post">
+E-Mail:<br>
+<input type="email" size="40" maxlength="250" name="email"><br><br>
+
+Dein Passwort:<br>
+<input type="password" size="40"  maxlength="250" name="passwort"><br><br>
+ 
+<input type="submit" value="OK">
+
+</form>
+</body>
+</html>

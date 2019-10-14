@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"">
+  <link rel="stylesheet" type="text/css" href="css1.css">
+  <link rel="stylesheet" type="text/css" href="../formatierungProjekt.css">
+  <title>LikeBike Kontakt</title>
+  <link rel="icon" href="../rad.jpg" type="image/x-icon">
+
+  <script type="text/javascript">
+    function toLogin(){
+      window.open('http://localhost/Registration.php');
+    }
+  </script>
+</head>
+  
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <img src="../SVGrad.svg" alt="1" class="navbar-brand" height="40" width="50">
+        <a class="navbar-brand" href="#" style="font-size:160%; color:maroon; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif">LikeBike</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="Projekt.php">Homepage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="support.php">Bei Fragen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="bikes.php">Räder</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Kontakt<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                    <a class="button_login" href="http://localhost/Login.php">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a id="messages" class="navbar-text" style="margin-left:200px; border-radius: 4px; padding: 10px 40px; background-color: rgb(231, 240, 226); color:rgb(129, 141, 121) "></a><script>document.getElementById('messages').innerHTML = 'Ihre bisherigen Nachrichten an uns: ' + localStorage.clickcount;</script>
+                </li>
+              </ul>
+                <form class="form-inline my-2 my-lg-0">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit" onclick="toLogin()">Registration</button>
+                </form>
+        </div>
+    </nav>
+
+              <form  id="kontaktformular" name="kontaktformular" action="">
+                <div>
+                  <label  for="absender" style="margin-left: 3cm; margin-top:25px">Ihre E-Mail-Adresse:</label>
+                  <input  type="text"  id="absender" name="absender"/>
+                </div>
+                <div>
+                  <label  for="nachricht" style="display: flex; justify-content: first baseline; margin-left: 3cm">Ihre Nachricht:</label>
+                  <textarea class="kontaktformular" id="nachricht" style="margin-left: 3cm" name="nachricht" cols="75" rows="15"></textarea>
+                </div>
+                <div>
+            
+                  <button class="kontaktformular" type="submit" style="margin-left: 3cm" type="button" onclick=myFunction()>Abschicken</button>
+  
+                 
+  
+                <script>function myFunction() {
+                  var sender = document.querySelector("#absender").value;
+                  var msg = document.querySelector("#nachricht").value;
+                  if (sender == "" || msg == ""){
+                    alert("Bitte geben sie eine Email-Adresse und eine Nachricht ein");
+                  }else{ 
+                    if (typeof(Storage) !== "undefined") {
+                      if (localStorage.clickcount) {
+                        localStorage.clickcount = Number(localStorage.clickcount)+1;
+                      } else {
+                        localStorage.clickcount = 1;
+                      }
+                      document.getElementById('messages').innerHTML = 'Ihre bisherigen Nachrichten an uns: ' + localStorage.clickcount;
+                      alert("Vielen Dank für ihre Hilfe. Sie haben Nachricht Nummer " + localStorage.clickcount + " an uns verfasst. Wir werden sie so bald wie möglich bearbeiten!");
+                    }
+                  }
+                }</script>
+                </div>
+                </form>
+
+
+</body>
+
+</html>
